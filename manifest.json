@@ -1,0 +1,15 @@
+{
+  "name": "Biskra CS Student Helper",
+  "short_name": "average",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ]
+}

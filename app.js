@@ -12,6 +12,12 @@
 ============================================================ */
 
 
+
+document.getElementById('mode').addEventListener('click', () => {
+  document.body.classList.toggle('light');
+});
+
+
 /* =========================
    1) SETTINGS (edit here)
 ========================= */
