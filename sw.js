@@ -1,4 +1,4 @@
-const CACHE = "biskra-cs-v2";
+const CACHE = "biskra-cs-v3";
 
 const ASSETS = [
   "/",
@@ -7,7 +7,8 @@ const ASSETS = [
   "/app.js",
   "/manifest.json",
   "/icon.png",
-  "/toggle2.png"
+  "/icon-192.png",
+  "/icon-512.png"
 ];
 
 // Install
