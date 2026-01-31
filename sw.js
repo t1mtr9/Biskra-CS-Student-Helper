@@ -1,57 +1,35 @@
-const CACHE = "biskra-cs-v7";
-
+const CACHE = "biskra-cs-v8";
 const ASSETS = [
   "./",
   "./index.html",
   "./style.css",
-  "./sw.js",
   "./app.js",
   "./manifest.json",
-  "./icon.png",
   "./icon-192.png",
-  "./icon-512.png",
-  "https://biskra-cs-student-helper.vercel.app/",
-  "https://biskra-cs-student-helper.vercel.app/index.html",
-  "https://biskra-cs-student-helper.vercel.app/style.css",
-  "https://biskra-cs-student-helper.vercel.app/app.js",
-  "https://biskra-cs-student-helper.vercel.app/manifest.json",
-  "https://biskra-cs-student-helper.vercel.app/icon.png",
-  "https://biskra-cs-student-helper.vercel.app/sw.js",
-  "https://biskra-cs-student-helper.vercel.app/icon-192.png",
-  "https://biskra-cs-student-helper.vercel.app/icon-512.png"
+  "./icon-512.png"
 ];
 
-// Install
-self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open(CACHE)
-      .then(cache => cache.addAll(ASSETS))
-      .then(() => self.skipWaiting())
-  );
+self.addEventListener("install", (event) => {
+  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(ASSETS)));
+  self.skipWaiting();
 });
 
-// Activate
-self.addEventListener("activate", event => {
+self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys()
-      .then(keys => Promise.all(
-        keys.map(key => key !== CACHE ? caches.delete(key) : null)
-      ))
-      .then(() => self.clients.claim())
+    caches.keys().then((keys) =>
+      Promise.all(keys.map((k) => (k !== CACHE ? caches.delete(k) : null)))
+    )
   );
+  self.clients.claim();
 });
 
-// Fetch
 self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
+  if (event.request.mode === "navigate") {
+    event.respondWith(fetch(event.request).catch(() => caches.match("./index.html")));
+    return;
+  }
 
-      return fetch(event.request).catch(() => {
-        if (event.request.mode === "navigate") {
-          return caches.match("./index.html");
-        }
-      });
-    })
+  event.respondWith(
+    caches.match(event.request).then((cached) => cached || fetch(event.request))
   );
 });
