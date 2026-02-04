@@ -9,18 +9,14 @@
     --bad: #ff6b6b;
     --warn: #ffd166;
 
-    /* Shadows as tokens (so light mode can override cleanly) */
     --shadow-sm: 0 6px 16px rgba(0, 0, 0, .28);
     --shadow: 0 10px 30px rgba(0, 0, 0, .35);
     --shadow-lg: 0 16px 38px rgba(0, 0, 0, .42);
-
-    /* Hover shadow uses a variable instead of hardcoded black */
     --shadow-hover: 0 14px 34px rgba(0, 0, 0, .38);
 
     --radius: 16px;
 }
 
-/* Light theme */
 body.light {
     --bg: #f7f9ff;
     --card: #ffffff;
@@ -29,102 +25,10 @@ body.light {
     --line: rgba(11, 18, 32, .10);
     --accent: #2563eb;
 
-    /* Softer shadows in light mode: lower alpha, more blur */
     --shadow-sm: 0 4px 14px rgba(11, 18, 32, .08);
     --shadow: 0 10px 26px rgba(11, 18, 32, .10);
     --shadow-lg: 0 14px 34px rgba(11, 18, 32, .12);
     --shadow-hover: 0 12px 24px rgba(11, 18, 32, .12);
-}
-
-/* Theme toggle button */
-.mode {
-    width: 40px;
-    height: 40px;
-    display: grid;
-    place-items: center;
-
-    padding: 0;
-    line-height: 0;
-    border-radius: 12px;
-
-    border: 1px solid var(--line);
-    background: rgba(255, 255, 255, .06);
-    box-shadow: var(--shadow-sm);
-    cursor: pointer;
-    transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
-}
-
-.mode:hover {
-    transform: translateY(-1px);
-    border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
-    box-shadow: var(--shadow-hover);
-}
-
-.mode:active {
-    transform: translateY(0px) scale(.98);
-}
-
-.mode:focus-visible {
-    outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent);
-    outline-offset: 3px;
-}
-
-/* SVG sizing */
-.themeIcon {
-    width: 20px;
-    height: 20px;
-    display: block;
-}
-
-/* Animation states */
-.themeIcon .sun {
-    transform-origin: 12px 12px;
-    transition: transform .45s cubic-bezier(.2, .9, .2, 1), opacity .25s ease;
-}
-
-.themeIcon .moon {
-    transform-origin: 12px 12px;
-    transition: transform .45s cubic-bezier(.2, .9, .2, 1), opacity .25s ease;
-    opacity: 0;
-    transform: rotate(-25deg) scale(.85);
-}
-
-/* When body is light, show moon (meaning: click to go dark) */
-body.light .themeIcon .sun {
-    opacity: 0;
-    transform: rotate(90deg) scale(.7);
-}
-
-body.light .themeIcon .moon {
-    opacity: 1;
-    transform: rotate(0deg) scale(1);
-}
-
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-
-    .mode,
-    .themeIcon .sun,
-    .themeIcon .moon {
-        transition: none !important;
-    }
-}
-
-/* Make “glass” surfaces lighter in light mode */
-body.light .card {
-    background: linear-gradient(180deg, rgba(255, 255, 255, .92), rgba(255, 255, 255, .78));
-}
-
-body.light .card .hd {
-    background: rgba(37, 99, 235, .06);
-}
-
-body.light .module,
-body.light .stat,
-body.light .table,
-body.light .homeBtn,
-body.light .footerCard {
-    background: rgba(11, 18, 32, .03);
 }
 
 * {
@@ -133,7 +37,7 @@ body.light .footerCard {
 
 body {
     margin: 0;
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Apple Color Emoji, Segoe UI Emoji;
     background: radial-gradient(1200px 800px at 20% 0%, var(--card) 0%, var(--bg) 55%) fixed;
     color: var(--text);
 }
@@ -184,6 +88,73 @@ header {
     color: var(--muted);
 }
 
+.mode {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    line-height: 0;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, .06);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+
+.mode:hover {
+    transform: translateY(-1px);
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+    box-shadow: var(--shadow-hover);
+}
+
+.mode:active {
+    transform: translateY(0px) scale(.98);
+}
+
+.mode:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    outline-offset: 3px;
+}
+
+.themeIcon {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+.themeIcon .sun {
+    transform-origin: 12px 12px;
+    transition: transform .45s cubic-bezier(.2, .9, .2, 1), opacity .25s ease;
+}
+
+.themeIcon .moon {
+    transform-origin: 12px 12px;
+    transition: transform .45s cubic-bezier(.2, .9, .2, 1), opacity .25s ease;
+    opacity: 0;
+    transform: rotate(-25deg) scale(.85);
+}
+
+body.light .themeIcon .sun {
+    opacity: 0;
+    transform: rotate(90deg) scale(.7);
+}
+
+body.light .themeIcon .moon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .mode,
+    .themeIcon .sun,
+    .themeIcon .moon {
+        transition: none !important;
+    }
+}
+
 .grid {
     display: grid;
     grid-template-columns: 1.4fr .9fr;
@@ -204,6 +175,10 @@ header {
     overflow: hidden;
 }
 
+body.light .card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, .92), rgba(255, 255, 255, .78));
+}
+
 .card .hd {
     padding: 14px 16px;
     border-bottom: 1px solid var(--line);
@@ -213,6 +188,10 @@ header {
     gap: 10px;
     flex-wrap: wrap;
     background: rgba(0, 0, 0, .14);
+}
+
+body.light .card .hd {
+    background: rgba(37, 99, 235, .06);
 }
 
 .card .hd .h {
@@ -253,6 +232,10 @@ header {
     border: 1px solid var(--line);
     border-radius: 14px;
     padding: 12px;
+}
+
+body.light .module {
+    background: rgba(11, 18, 32, .03);
 }
 
 .module .top {
@@ -354,6 +337,10 @@ button:active {
     padding: 14px;
 }
 
+body.light .stat {
+    background: rgba(11, 18, 32, .03);
+}
+
 .big {
     font-size: 34px;
     font-weight: 900;
@@ -382,6 +369,10 @@ button:active {
     border-radius: 14px;
     border: 1px solid var(--line);
     background: rgba(0, 0, 0, .16);
+}
+
+body.light .table {
+    background: rgba(11, 18, 32, .03);
 }
 
 .table th,
@@ -427,7 +418,6 @@ button:active {
     display: block;
 }
 
-/* Pages */
 .page {
     display: none;
 }
@@ -436,7 +426,6 @@ button:active {
     display: block;
 }
 
-/* Home (clean) */
 .homeHeader {
     margin-bottom: 14px;
     color: var(--muted);
@@ -471,6 +460,10 @@ button:active {
     transition: transform .15s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;
 }
 
+body.light .homeBtn {
+    background: rgba(11, 18, 32, .03);
+}
+
 .homeBtn:hover {
     transform: translateY(-2px);
     border-color: rgba(110, 168, 254, .45);
@@ -501,7 +494,6 @@ button:active {
     white-space: nowrap;
 }
 
-/* Footer (matches .wrap width + thinner) */
 .footer {
     margin-top: 14px;
     padding: 0 24px 12px;
@@ -527,7 +519,10 @@ button:active {
     flex-wrap: wrap;
 }
 
-/* smaller icon button */
+body.light .footerCard {
+    background: rgba(11, 18, 32, .03);
+}
+
 .iconLink {
     display: inline-flex;
     align-items: center;
@@ -554,4 +549,22 @@ button:active {
     height: 18px;
     display: block;
     fill: currentColor;
+}
+
+/* Adkar extras */
+.dhikrItem {
+    cursor: pointer;
+    margin-bottom: 12px;
+}
+
+.dhikrItem.done {
+    opacity: .35;
+    pointer-events: none;
+}
+
+.dhikrText {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0 0 10px 0;
+    text-align: right;
 }

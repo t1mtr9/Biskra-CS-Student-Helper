@@ -1,7 +1,5 @@
 # Biskra CS Student Helper - PWA
 
-ccc 
-
 A Progressive Web App for calculating semester averages for Computer Science students at Biskra University.
 
 ## ✨ Features
