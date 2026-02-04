@@ -1,9 +1,9 @@
-/*
-  Biskra CS Student Helper
-  - Semester Average Calculator (S1..S6)
-  - Local persistence for marks + notes
-  - Theme toggle
-  - Added: routes (home/calc/pomodoro/adkar), Pomodoro, Adkar
+/* Biskra CS Student Helper - Semester Average Calculator (S1..S6)
+   - Local persistence for marks + notes
+   - Theme toggle
+   - Routes (home/calc/pomodoro/adkar)
+   - Pomodoro advanced (auto cycles + options)
+   - Adkar
 */
 
 const modeBtn = document.getElementById("mode");
@@ -73,9 +73,7 @@ function clearSemesterFromStorage(semKey) {
 function wireMarksPersistenceForSemester(semKey) {
     const host = document.getElementById("modules" + semKey);
     if (!host) return;
-
     restoreAllSavedInputs();
-
     host.querySelectorAll('input[type="number"]').forEach((inp) => {
         inp.addEventListener("input", (e) => persistInputValue(e.target));
     });
@@ -84,10 +82,8 @@ function wireMarksPersistenceForSemester(semKey) {
 function wireNotesPersistence() {
     const notesEl = document.getElementById("notes");
     if (!notesEl) return;
-
     const state = loadState();
     notesEl.value = state.notes || "";
-
     notesEl.addEventListener("input", () => {
         const s = loadState();
         s.notes = notesEl.value;
@@ -109,7 +105,7 @@ const MODULES = {
         { key: "ste", name: "STE", single: true, coef: 1 },
         { key: "eng", name: "English", single: true, coef: 1 },
         { key: "phy1", name: "Physics 1", coef: 2, optional: true },
-        { key: "elec", name: "Electronics", coef: 2, optional: true }
+        { key: "elec", name: "Electronics", coef: 2, optional: true },
     ],
     s2: [
         { key: "an2", name: "Analysis 2", coef: 4 },
@@ -119,7 +115,7 @@ const MODULES = {
         { key: "proba", name: "ProbaStats", coef: 2 },
         { key: "ict", name: "ICT", single: true, coef: 1 },
         { key: "ptm", name: "PTM", tpOnly: true, coef: 1 },
-        { key: "phy2", name: "Physics 2", coef: 2 }
+        { key: "phy2", name: "Physics 2", coef: 2 },
     ],
     s3: [
         { key: "algo", name: "Algo", hasTP: true, coef: 3 },
@@ -128,7 +124,7 @@ const MODULES = {
         { key: "si", name: "SI", coef: 3 },
         { key: "eng", name: "English", single: true, coef: 1 },
         { key: "mn", name: "MN", coef: 2 },
-        { key: "lm", name: "LM", coef: 2 }
+        { key: "lm", name: "LM", coef: 2 },
     ],
     s4: [
         { key: "os", name: "OS", hasTP: true, coef: 3 },
@@ -137,7 +133,7 @@ const MODULES = {
         { key: "bd", name: "BD", hasTP: true, coef: 3 },
         { key: "eng", name: "English", single: true, coef: 1 },
         { key: "poo", name: "POO", tpOnly: true, coef: 2 },
-        { key: "web", name: "Web", tpOnly: true, coef: 2 }
+        { key: "web", name: "Web", tpOnly: true, coef: 2 },
     ],
     s5: [
         { key: "os2", name: "OS 2", hasTP: true, coef: 2 },
@@ -149,7 +145,7 @@ const MODULES = {
         { key: "pl", name: "Linear Prog", coef: 2, optional: true },
         { key: "pp", name: "Paradigms", coef: 2, optional: true },
         { key: "ai", name: "AI", coef: 2, optional: true },
-        { key: "eng", name: "English", coef: 1 }
+        { key: "eng", name: "English", coef: 1 },
     ],
     s6: [
         { key: "mob", name: "Mobile", hasTP: true, coef: 3 },
@@ -159,8 +155,8 @@ const MODULES = {
         { key: "ws", name: "Web Sem", coef: 2, optional: true },
         { key: "crypto", name: "Crypto", coef: 2, optional: true },
         { key: "sw", name: "Sci Writing", coef: 1, optional: true },
-        { key: "proj", name: "Project", single: true, coef: 4 }
-    ]
+        { key: "proj", name: "Project", single: true, coef: 4 },
+    ],
 };
 
 const SEMESTERS = [
@@ -169,7 +165,7 @@ const SEMESTERS = [
     { key: "s3", label: "S3 average" },
     { key: "s4", label: "S4 average" },
     { key: "s5", label: "S5 average" },
-    { key: "s6", label: "S6 average" }
+    { key: "s6", label: "S6 average" },
 ];
 
 /* ---------------- DOM UTILS ---------------- */
@@ -206,7 +202,6 @@ function pageTemplate(semKey, avgLabel) {
           <div class="h">Marks</div>
           <div class="badge">Coefficients fixed</div>
         </div>
-
         <div class="bd">
           <div id="warn${semKey}" class="warn"></div>
           <div class="modules" id="modules${semKey}"></div>
@@ -225,13 +220,18 @@ function pageTemplate(semKey, avgLabel) {
           <div class="h">Result</div>
           <div class="badge">Weighted average</div>
         </div>
-
         <div class="bd">
           <div class="stat">
             <div class="sub">${avgLabel}</div>
             <div class="big" id="avg${semKey}"></div>
-            <div class="kpi"><span>Status</span><strong id="status${semKey}" class="sub"></strong></div>
-            <div class="kpi"><span>Total coef</span><strong id="sumCoef${semKey}" class="sub"></strong></div>
+            <div class="kpi">
+              <span>Status</span>
+              <strong id="status${semKey}" class="sub"></strong>
+            </div>
+            <div class="kpi">
+              <span>Total coef</span>
+              <strong id="sumCoef${semKey}" class="sub"></strong>
+            </div>
           </div>
 
           <div class="stat">
@@ -261,7 +261,7 @@ function inputsTemplate(semKey, m) {
         </div>
         <div>
           <label>-</label>
-          <input type="number" disabled placeholder="" />
+          <input type="number" disabled placeholder="-" />
         </div>
       </div>
     `;
@@ -326,7 +326,7 @@ function buildModulesUI(semKey) {
         div.className = "module";
         div.innerHTML = `
       <div class="top">
-        <div class="name">${m.name}${m.optional ? ' <span style="opacity:.6;font-weight:700">(choice)</span>' : ""}</div>
+        <div class="name">${m.name}${m.optional ? ' <span style="opacity:.6;font-weight:700;">(choice)</span>' : ""}</div>
         <div class="coef">coef ${m.coef}</div>
       </div>
       ${inputsTemplate(semKey, m)}
@@ -339,48 +339,49 @@ function buildModulesUI(semKey) {
 function choiceSelected(semKey, m) {
     if (!m.optional) return true;
 
-    if (m.single) return !isEmptyInput(document.getElementById(semKey + m.key + "note"));
+    if (m.single) {
+        return !isEmptyInput(document.getElementById(`${semKey}${m.key}note`));
+    }
 
     let ids = [];
-    if (m.hasTP) ids = [semKey + m.key + "td", semKey + m.key + "tp", semKey + m.key + "ex"];
-    else if (m.tpOnly) ids = [semKey + m.key + "tp", semKey + m.key + "ex"];
-    else ids = [semKey + m.key + "td", semKey + m.key + "ex"];
+    if (m.hasTP) ids = [`${semKey}${m.key}td`, `${semKey}${m.key}tp`, `${semKey}${m.key}ex`];
+    else if (m.tpOnly) ids = [`${semKey}${m.key}tp`, `${semKey}${m.key}ex`];
+    else ids = [`${semKey}${m.key}td`, `${semKey}${m.key}ex`];
 
     return ids.some((id) => !isEmptyInput(document.getElementById(id)));
 }
 
 function moduleMark(semKey, m) {
-    if (m.single) return readVal(semKey + m.key + "note");
+    if (m.single) return readVal(`${semKey}${m.key}note`);
 
-    const ex = readVal(semKey + m.key + "ex");
+    const ex = readVal(`${semKey}${m.key}ex`);
 
     if (m.hasTP) {
-        const td = readVal(semKey + m.key + "td");
-        const tp = readVal(semKey + m.key + "tp");
+        const td = readVal(`${semKey}${m.key}td`);
+        const tp = readVal(`${semKey}${m.key}tp`);
         if ([td, tp, ex].some(Number.isNaN)) return NaN;
         return WEIGHTS.CC * ((td + tp) / 2) + WEIGHTS.EXAM * ex;
     }
 
     if (m.tpOnly) {
-        const tp = readVal(semKey + m.key + "tp");
+        const tp = readVal(`${semKey}${m.key}tp`);
         if ([tp, ex].some(Number.isNaN)) return NaN;
         return WEIGHTS.CC * tp + WEIGHTS.EXAM * ex;
     }
 
-    const td = readVal(semKey + m.key + "td");
+    const td = readVal(`${semKey}${m.key}td`);
     if ([td, ex].some(Number.isNaN)) return NaN;
     return WEIGHTS.CC * td + WEIGHTS.EXAM * ex;
 }
 
 function resetUI(semKey) {
     const modules = MODULES[semKey];
-
     for (const m of modules) {
         const ids = [];
-        if (m.single) ids.push(semKey + m.key + "note");
-        else if (m.hasTP) ids.push(semKey + m.key + "td", semKey + m.key + "tp", semKey + m.key + "ex");
-        else if (m.tpOnly) ids.push(semKey + m.key + "tp", semKey + m.key + "ex");
-        else ids.push(semKey + m.key + "td", semKey + m.key + "ex");
+        if (m.single) ids.push(`${semKey}${m.key}note`);
+        else if (m.hasTP) ids.push(`${semKey}${m.key}td`, `${semKey}${m.key}tp`, `${semKey}${m.key}ex`);
+        else if (m.tpOnly) ids.push(`${semKey}${m.key}tp`, `${semKey}${m.key}ex`);
+        else ids.push(`${semKey}${m.key}td`, `${semKey}${m.key}ex`);
 
         ids.forEach((id) => {
             const el = document.getElementById(id);
@@ -420,12 +421,7 @@ function computeAndRender(semKey) {
 
         sumCoef += m.coef;
         sum += mark * m.coef;
-
-        rows.push({
-            name: m.name + (m.optional ? " (choice)" : ""),
-            mark,
-            coef: m.coef
-        });
+        rows.push({ name: m.name + (m.optional ? " (choice)" : ""), mark, coef: m.coef });
     }
 
     if (sumCoef === 0) {
@@ -460,10 +456,7 @@ function computeAndRender(semKey) {
 function fillExample(semKey) {
     const set = (id, v) => {
         const el = document.getElementById(id);
-        if (el) {
-            el.value = v;
-            persistInputValue(el);
-        }
+        if (el) { el.value = v; persistInputValue(el); }
     };
 
     switch (semKey) {
@@ -472,8 +465,7 @@ function fillExample(semKey) {
             set("s1alg1td", 13); set("s1alg1ex", 12);
             set("s1asd1td", 13); set("s1asd1tp", 14); set("s1asd1ex", 12);
             set("s1ms1td", 12); set("s1ms1ex", 10);
-            set("s1stenote", 15);
-            set("s1engnote", 16);
+            set("s1stenote", 15); set("s1engnote", 16);
             set("s1phy1td", 12); set("s1phy1ex", 10);
             set("s1electd", 11); set("s1elecex", 12);
             return;
@@ -531,26 +523,18 @@ function fillExample(semKey) {
 /* ---------------- ROUTER ---------------- */
 function setActivePage(key) {
     document.querySelectorAll(".page").forEach((p) => p.classList.remove("active"));
-
     const target = document.getElementById("page" + key);
     const home = document.getElementById("pagehome");
-
     (target || home).classList.add("active");
     window.scrollTo(0, 0);
 }
 
-
 function currentRoute() {
-    const key = (location.hash || "#home").replace("#", "") || "home";
-
-    // allow your new pages
+    const key = (location.hash || "#home").replace("#", "");
     const staticPages = ["home", "calc", "pomodoro", "adkar"];
     if (staticPages.includes(key)) return key;
-
-    // allow semesters
     return SEMESTERS.some((s) => s.key === key) ? key : "home";
 }
-
 
 function initPages() {
     for (const sem of SEMESTERS) {
@@ -560,13 +544,12 @@ function initPages() {
 
         page.innerHTML = pageTemplate(semKey, sem.label);
         buildModulesUI(semKey);
-
         wireMarksPersistenceForSemester(semKey);
 
         document.getElementById("btnCalc" + semKey).addEventListener("click", () => computeAndRender(semKey));
         document.getElementById("btnReset" + semKey).addEventListener("click", () => resetUI(semKey));
         document.getElementById("btnExample" + semKey).addEventListener("click", () => { fillExample(semKey); computeAndRender(semKey); });
-        document.getElementById("btnHome" + semKey).addEventListener("click", () => (location.hash = "#home"));
+        document.getElementById("btnHome" + semKey).addEventListener("click", () => location.hash = "home");
     }
 }
 
@@ -576,73 +559,256 @@ function initRouter() {
     apply();
 }
 
-/* ---------------- POMODORO ---------------- */
-let pomoTime = 25 * 60;
+/* ---------------- POMODORO (Advanced) ---------------- */
 let pomoInterval = null;
 
+const POMO_MAX_FOCUS = 5;
+
+const pomoState = {
+    phase: "focus",          // "focus" | "short" | "long" | "done"
+    focusDone: 0,            // completed focus sessions
+    remaining: 25 * 60,      // seconds
+    running: false,
+    focusMin: 25,
+    shortMin: 5,
+    longMin: 15,
+    autoNext: true,
+    sound: true,
+};
+
+function el(id) { return document.getElementById(id); }
+
+function formatMMSS(sec) {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+}
+
+function phaseLabel(phase) {
+    if (phase === "focus") return "Focus";
+    if (phase === "short") return "Short Rest";
+    if (phase === "long") return "Long Rest";
+    return "Done";
+}
+
+function phaseDurationSec(phase) {
+    if (phase === "focus") return pomoState.focusMin * 60;
+    if (phase === "short") return pomoState.shortMin * 60;
+    if (phase === "long") return pomoState.longMin * 60;
+    return 0;
+}
+
+function setBadge(text) {
+    const b = el("pomoBadge");
+    if (b) b.textContent = text;
+}
+
 function renderPomo() {
-    const m = Math.floor(pomoTime / 60);
-    const s = pomoTime % 60;
-    const el = document.getElementById("pomoDisplay");
-    if (el) el.textContent = `${m}:${String(s).padStart(2, "0")}`;
+    const d = el("pomoDisplay");
+    const ph = el("pomoPhase");
+    const cnt = el("pomoCount");
+
+    if (d) d.textContent = formatMMSS(pomoState.remaining);
+    if (ph) ph.textContent = phaseLabel(pomoState.phase);
+    if (cnt) cnt.textContent = String(pomoState.focusDone);
+
+    const toggle = el("btnPomoToggle");
+    if (toggle) toggle.textContent = pomoState.running ? "Pause" : "Start";
+
+    setBadge(pomoState.phase === "done"
+        ? "Finished (5 focus)"
+        : `${phaseLabel(pomoState.phase)} • ${pomoState.focusDone}/${POMO_MAX_FOCUS}`
+    );
+}
+
+function stopTimer() {
+    if (pomoInterval) clearInterval(pomoInterval);
+    pomoInterval = null;
+    pomoState.running = false;
+    renderPomo();
+}
+
+function beep() {
+    if (!pomoState.sound) return;
+
+    try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+
+        const ctx = new AudioCtx();
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+
+        o.type = "sine";
+        o.frequency.value = 880;
+        g.gain.value = 0.0001;
+
+        o.connect(g);
+        g.connect(ctx.destination);
+
+        o.start();
+        g.gain.exponentialRampToValueAtTime(0.15, ctx.currentTime + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.30);
+        o.stop(ctx.currentTime + 0.32);
+
+        setTimeout(() => ctx.close && ctx.close(), 600);
+    } catch (e) {
+        // ignore
+    }
+}
+
+function nextPhaseAuto() {
+    // Called when a phase hits 0
+    beep();
+
+    if (pomoState.phase === "focus") {
+        pomoState.focusDone += 1;
+
+        if (pomoState.focusDone >= POMO_MAX_FOCUS) {
+            pomoState.phase = "done";
+            pomoState.remaining = 0;
+            stopTimer();
+            renderPomo();
+            return;
+        }
+
+        // long rest after 4th focus (classic), otherwise short rest
+        pomoState.phase = (pomoState.focusDone % 4 === 0) ? "long" : "short";
+        pomoState.remaining = phaseDurationSec(pomoState.phase);
+    } else if (pomoState.phase === "short" || pomoState.phase === "long") {
+        pomoState.phase = "focus";
+        pomoState.remaining = phaseDurationSec("focus");
+    }
+
+    renderPomo();
+
+    if (pomoState.autoNext) {
+        startTimer();
+    } else {
+        stopTimer();
+    }
+}
+
+function tick() {
+    if (pomoState.remaining > 0) {
+        pomoState.remaining -= 1;
+        renderPomo();
+        return;
+    }
+    nextPhaseAuto();
+}
+
+function startTimer() {
+    if (pomoState.phase === "done") return;
+    if (pomoInterval) clearInterval(pomoInterval);
+    pomoState.running = true;
+    pomoInterval = setInterval(tick, 1000);
+    renderPomo();
+}
+
+function applyPomodoroSettingsFromUI() {
+    const focusSelect = el("pomoFocusSelect");
+    const shortInp = el("pomoShort");
+    const longInp = el("pomoLong");
+    const autoChk = el("pomoAuto");
+    const soundChk = el("pomoSound");
+
+    pomoState.focusMin = focusSelect ? parseInt(focusSelect.value, 10) : 25;
+    pomoState.shortMin = shortInp ? Math.max(1, parseInt(shortInp.value || "5", 10)) : 5;
+    pomoState.longMin = longInp ? Math.max(1, parseInt(longInp.value || "15", 10)) : 15;
+    pomoState.autoNext = !!(autoChk && autoChk.checked);
+    pomoState.sound = !!(soundChk && soundChk.checked);
+}
+
+function resetPomodoro(full = true) {
+    stopTimer();
+    applyPomodoroSettingsFromUI();
+
+    pomoState.phase = "focus";
+    pomoState.focusDone = 0;
+    pomoState.remaining = phaseDurationSec("focus");
+
+    if (!full) renderPomo();
+    renderPomo();
+}
+
+function skipPomodoroPhase() {
+    if (pomoState.phase === "done") return;
+    pomoState.remaining = 0;
+    renderPomo();
+    nextPhaseAuto();
 }
 
 function wirePomodoro() {
-    const btnToggle = document.getElementById("btnPomoToggle");
-    const btnReset = document.getElementById("btnPomoReset");
-    const btnHome = document.getElementById("btnPomoHome");
+    const btnToggle = el("btnPomoToggle");
+    const btnReset = el("btnPomoReset");
+    const btnSkip = el("btnPomoSkip");
+    const btnHome = el("btnPomoHome");
+
+    const focusSelect = el("pomoFocusSelect");
+    const shortInp = el("pomoShort");
+    const longInp = el("pomoLong");
+    const autoChk = el("pomoAuto");
+    const soundChk = el("pomoSound");
+
+    const onSettingsChange = () => {
+        applyPomodoroSettingsFromUI();
+        if (!pomoState.running && pomoState.phase === "focus" && pomoState.focusDone === 0) {
+            pomoState.remaining = phaseDurationSec("focus");
+            renderPomo();
+        }
+    };
+
+    [focusSelect, shortInp, longInp, autoChk, soundChk].forEach((x) => {
+        if (!x) return;
+        x.addEventListener("change", onSettingsChange);
+        x.addEventListener("input", onSettingsChange);
+    });
 
     if (btnToggle) {
         btnToggle.onclick = () => {
-            if (pomoInterval) {
-                clearInterval(pomoInterval);
-                pomoInterval = null;
-                btnToggle.textContent = "Start";
-                return;
-            }
+            if (pomoState.running) {
+                stopTimer();
+            } else {
+                // ensure settings applied before start
+                applyPomodoroSettingsFromUI();
 
-            btnToggle.textContent = "Pause";
-            pomoInterval = setInterval(() => {
-                if (pomoTime > 0) {
-                    pomoTime--;
-                    renderPomo();
-                } else {
-                    clearInterval(pomoInterval);
-                    pomoInterval = null;
-                    btnToggle.textContent = "Start";
-                    alert("Session over!");
+                // if at 0 and not done, set duration for current phase
+                if (pomoState.remaining <= 0 && pomoState.phase !== "done") {
+                    pomoState.remaining = phaseDurationSec(pomoState.phase);
                 }
-            }, 1000);
+                startTimer();
+            }
         };
     }
 
     if (btnReset) {
-        btnReset.onclick = () => {
-            if (pomoInterval) {
-                clearInterval(pomoInterval);
-                pomoInterval = null;
-            }
-            pomoTime = 25 * 60;
-            renderPomo();
-            if (btnToggle) btnToggle.textContent = "Start";
+        btnReset.onclick = () => resetPomodoro(true);
+    }
+
+    if (btnSkip) {
+        btnSkip.onclick = () => skipPomodoroPhase();
+    }
+
+    if (btnHome) {
+        btnHome.onclick = () => {
+            location.hash = "home";
         };
     }
 
-    if (btnHome) btnHome.onclick = () => (location.hash = "#home");
-
-    renderPomo();
+    // init
+    resetPomodoro(true);
 }
 
 /* ---------------- ADKAR ---------------- */
 window.handleDhikr = function (el) {
     const counter = el.querySelector(".counter");
     if (!counter) return;
-
     const val = parseInt(counter.textContent, 10);
     if (!Number.isFinite(val)) return;
 
     if (val > 0) counter.textContent = String(val - 1);
-    if (val - 1 === 0) el.classList.add("done");
+    if (val - 1 <= 0) el.classList.add("done");
 };
 
 /* ---------------- BOOT ---------------- */

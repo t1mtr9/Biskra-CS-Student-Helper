@@ -8,31 +8,46 @@
     --good: #31d0aa;
     --bad: #ff6b6b;
     --warn: #ffd166;
-
     --shadow-sm: 0 6px 16px rgba(0, 0, 0, .28);
     --shadow: 0 10px 30px rgba(0, 0, 0, .35);
     --shadow-lg: 0 16px 38px rgba(0, 0, 0, .42);
     --shadow-hover: 0 14px 34px rgba(0, 0, 0, .38);
-
     --radius: 16px;
+
+    /* common UI tokens */
+    --t-fast: .15s ease;
+    --t-slow: .45s cubic-bezier(.2, .9, .2, 1);
+
+    --surface-1: rgba(0, 0, 0, .16);
+    /* module/stat/table */
+    --surface-2: rgba(0, 0, 0, .14);
+    /* card header, home button */
+    --surface-3: rgba(0, 0, 0, .12);
+    /* footer card */
+    --input-bg: rgba(255, 255, 255, .06);
+    --chip-bg: rgba(255, 255, 255, .06);
 }
 
 body.light {
     --bg: #f7f9ff;
-    --card: #ffffff;
+    --card: #fff;
     --text: #0b1220;
     --muted: #51607c;
     --line: rgba(11, 18, 32, .10);
     --accent: #2563eb;
-
     --shadow-sm: 0 4px 14px rgba(11, 18, 32, .08);
     --shadow: 0 10px 26px rgba(11, 18, 32, .10);
     --shadow-lg: 0 14px 34px rgba(11, 18, 32, .12);
     --shadow-hover: 0 12px 24px rgba(11, 18, 32, .12);
+
+    --surface-1: rgba(11, 18, 32, .03);
+    --surface-2: rgba(11, 18, 32, .03);
+    --surface-3: rgba(11, 18, 32, .03);
+    --input-bg: rgba(11, 18, 32, .03);
 }
 
 * {
-    box-sizing: border-box;
+    box-sizing: border-box
 }
 
 body {
@@ -45,7 +60,7 @@ body {
 .wrap {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 24px;
+    padding: 24px
 }
 
 header {
@@ -54,38 +69,54 @@ header {
     justify-content: space-between;
     gap: 14px;
     flex-wrap: wrap;
-    margin-bottom: 18px;
+    margin-bottom: 18px
 }
 
 .brand {
     display: flex;
     align-items: baseline;
     gap: 10px;
-    flex-wrap: wrap;
+    flex-wrap: wrap
 }
 
 .brand h1 {
     margin: 0;
     font-size: 20px;
-    letter-spacing: .2px;
+    letter-spacing: .2px
 }
 
-.brand .tag {
-    color: var(--muted);
-    font-size: 12px;
-}
-
-.pill {
+/* Shared “chip” look */
+.pill,
+.toggleRow {
     display: inline-flex;
     align-items: center;
     gap: 10px;
     padding: 10px 12px;
     border: 1px solid var(--line);
     border-radius: 999px;
-    background: rgba(255, 255, 255, .04);
     box-shadow: var(--shadow-sm);
+}
+
+.pill {
+    background: rgba(255, 255, 255, .04);
     font-size: 13px;
-    color: var(--muted);
+    color: var(--muted)
+}
+
+.toggleRow {
+    background: rgba(255, 255, 255, .05);
+    user-select: none;
+    cursor: pointer;
+    position: relative
+}
+
+/* Shared interactive transitions */
+.mode,
+button,
+.homeBtn,
+.iconLink,
+.toggleRow .chkBox {
+    transition: transform var(--t-fast), background var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast);
 }
 
 .mode {
@@ -100,70 +131,73 @@ header {
     background: rgba(255, 255, 255, .06);
     box-shadow: var(--shadow-sm);
     cursor: pointer;
-    transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
 }
 
 .mode:hover {
     transform: translateY(-1px);
     border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
-    box-shadow: var(--shadow-hover);
+    box-shadow: var(--shadow-hover)
 }
 
 .mode:active {
-    transform: translateY(0px) scale(.98);
+    transform: translateY(0) scale(.98)
 }
 
-.mode:focus-visible {
+.mode:focus-visible,
+.toggleRow:has(.pomoChk:focus-visible) {
     outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent);
-    outline-offset: 3px;
+    outline-offset: 3px
 }
 
 .themeIcon {
     width: 20px;
     height: 20px;
-    display: block;
+    display: block
 }
 
-.themeIcon .sun {
+.themeIcon .sun,
+.themeIcon .moon {
     transform-origin: 12px 12px;
-    transition: transform .45s cubic-bezier(.2, .9, .2, 1), opacity .25s ease;
+    transition: transform var(--t-slow), opacity .25s ease
 }
 
 .themeIcon .moon {
-    transform-origin: 12px 12px;
-    transition: transform .45s cubic-bezier(.2, .9, .2, 1), opacity .25s ease;
     opacity: 0;
-    transform: rotate(-25deg) scale(.85);
+    transform: rotate(-25deg) scale(.85)
 }
 
 body.light .themeIcon .sun {
     opacity: 0;
-    transform: rotate(90deg) scale(.7);
+    transform: rotate(90deg) scale(.7)
 }
 
 body.light .themeIcon .moon {
     opacity: 1;
-    transform: rotate(0deg) scale(1);
+    transform: rotate(0) scale(1)
 }
 
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion:reduce) {
 
     .mode,
     .themeIcon .sun,
-    .themeIcon .moon {
-        transition: none !important;
+    .themeIcon .moon,
+    button,
+    .homeBtn,
+    .iconLink,
+    .toggleRow .chkBox {
+        transition: none !important
     }
 }
 
 .grid {
     display: grid;
     grid-template-columns: 1.4fr .9fr;
-    gap: 16px;
+    gap: 16px
 }
 
-@media (max-width: 920px) {
+@media (max-width:920px) {
     .grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr
     }
 }
 
@@ -176,7 +210,7 @@ body.light .themeIcon .moon {
 }
 
 body.light .card {
-    background: linear-gradient(180deg, rgba(255, 255, 255, .92), rgba(255, 255, 255, .78));
+    background: linear-gradient(180deg, rgba(255, 255, 255, .92), rgba(255, 255, 255, .78))
 }
 
 .card .hd {
@@ -187,11 +221,11 @@ body.light .card {
     justify-content: space-between;
     gap: 10px;
     flex-wrap: wrap;
-    background: rgba(0, 0, 0, .14);
+    background: var(--surface-2);
 }
 
 body.light .card .hd {
-    background: rgba(37, 99, 235, .06);
+    background: rgba(37, 99, 235, .06)
 }
 
 .card .hd .h {
@@ -199,7 +233,7 @@ body.light .card .hd {
     letter-spacing: .2px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 10px
 }
 
 .badge {
@@ -208,34 +242,46 @@ body.light .card .hd {
     padding: 4px 10px;
     border: 1px solid var(--line);
     border-radius: 999px;
-    background: rgba(0, 0, 0, .18);
+    background: rgba(0, 0, 0, .18)
 }
 
 .card .bd {
-    padding: 16px;
+    padding: 16px
 }
 
 .modules {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
+    gap: 14px
 }
 
-@media (max-width: 720px) {
+@media (max-width:720px) {
     .modules {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr
     }
 }
 
-.module {
-    background: rgba(0, 0, 0, .16);
+/* Unified “surface” blocks */
+.module,
+.stat,
+.table {
+    background: var(--surface-1);
     border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 12px;
+    border-radius: 14px
 }
 
-body.light .module {
-    background: rgba(11, 18, 32, .03);
+.module {
+    padding: 12px
+}
+
+.stat {
+    padding: 14px
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden
 }
 
 .module .top {
@@ -243,12 +289,12 @@ body.light .module {
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 10px
 }
 
 .module .name {
     font-weight: 800;
-    letter-spacing: .2px;
+    letter-spacing: .2px
 }
 
 .module .coef {
@@ -258,45 +304,61 @@ body.light .module {
     border: 1px solid var(--line);
     border-radius: 999px;
     background: rgba(255, 255, 255, .04);
-    white-space: nowrap;
+    white-space: nowrap
 }
 
 .row {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
+    grid-template-columns: repeat(3, 1fr)
 }
 
 .row.two {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr)
 }
+
+/* .row.three removed (same as base) */
 
 label {
     display: block;
     font-size: 12px;
     color: var(--muted);
-    margin: 0 0 6px 2px;
+    margin: 0 0 6px 2px
 }
 
-input[type="number"] {
+input[type="number"],
+select {
     width: 100%;
-    padding: 10px 10px;
-    border-radius: 12px;
+    padding: 10px;
+    height: 44px;
+    border-radius: 14px;
     border: 1px solid var(--line);
-    background: rgba(255, 255, 255, .05);
+    background: var(--input-bg);
     color: var(--text);
     outline: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
 }
 
 input[type="number"]::placeholder {
-    color: rgba(231, 238, 252, .35);
+    color: rgba(231, 238, 252, .35)
+}
+
+select {
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%;
+    background-size: 6px 6px;
+    background-repeat: no-repeat;
+    padding-right: 34px;
+    cursor: pointer;
 }
 
 .actions {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-    margin-top: 14px;
+    margin-top: 14px
 }
 
 button {
@@ -307,72 +369,51 @@ button {
     border-radius: 12px;
     cursor: pointer;
     font-weight: 700;
-    transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
 }
 
 button.secondary {
-    background: rgba(255, 255, 255, .06);
+    background: rgba(255, 255, 255, .06)
 }
 
 button:hover {
     transform: translateY(-1px);
     border-color: rgba(110, 168, 254, .40);
     box-shadow: var(--shadow-hover);
-    background: rgba(110, 168, 254, .22);
+    background: rgba(110, 168, 254, .22)
 }
 
 button:active {
-    transform: translateY(0px);
+    transform: translateY(0)
 }
 
 .side .bd {
     display: grid;
-    gap: 12px;
-}
-
-.stat {
-    background: rgba(0, 0, 0, .16);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 14px;
-}
-
-body.light .stat {
-    background: rgba(11, 18, 32, .03);
+    gap: 12px
 }
 
 .big {
     font-size: 34px;
     font-weight: 900;
-    letter-spacing: .3px;
-    margin: 6px 0 0;
+    letter-spacing: .3px
+}
+
+#pagepomodoro .big {
+    font-size: 44px;
+    letter-spacing: .5px
 }
 
 .sub {
     color: var(--muted);
     font-size: 13px;
-    margin: 4px 0 0;
+    margin: 4px 0 0
 }
 
 .pass {
-    color: var(--good);
+    color: var(--good)
 }
 
 .fail {
-    color: var(--bad);
-}
-
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    overflow: hidden;
-    border-radius: 14px;
-    border: 1px solid var(--line);
-    background: rgba(0, 0, 0, .16);
-}
-
-body.light .table {
-    background: rgba(11, 18, 32, .03);
+    color: var(--bad)
 }
 
 .table th,
@@ -380,17 +421,17 @@ body.light .table {
     padding: 10px 12px;
     border-bottom: 1px solid var(--line);
     text-align: left;
-    font-size: 13px;
+    font-size: 13px
 }
 
 .table th {
     color: var(--muted);
     font-weight: 700;
-    background: rgba(255, 255, 255, .04);
+    background: rgba(255, 255, 255, .04)
 }
 
 .table tr:last-child td {
-    border-bottom: none;
+    border-bottom: none
 }
 
 .kpi {
@@ -400,7 +441,7 @@ body.light .table {
     gap: 10px;
     margin-top: 8px;
     color: var(--muted);
-    font-size: 13px;
+    font-size: 13px
 }
 
 .warn {
@@ -411,37 +452,37 @@ body.light .table {
     padding: 10px 12px;
     border-radius: 14px;
     font-size: 13px;
-    line-height: 1.4;
+    line-height: 1.4
 }
 
 .warn.show {
-    display: block;
+    display: block
 }
 
 .page {
-    display: none;
+    display: none
 }
 
 .page.active {
-    display: block;
+    display: block
 }
 
 .homeHeader {
     margin-bottom: 14px;
     color: var(--muted);
     font-size: 13px;
-    line-height: 1.4;
+    line-height: 1.4
 }
 
 .homeBtns {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
+    gap: 14px
 }
 
-@media (max-width: 720px) {
+@media (max-width:720px) {
     .homeBtns {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr
     }
 }
 
@@ -455,55 +496,155 @@ body.light .table {
     color: var(--text);
     border-radius: 16px;
     border: 1px solid var(--line);
-    background: rgba(0, 0, 0, .14);
+    background: var(--surface-2);
     box-shadow: var(--shadow);
-    transition: transform .15s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;
-}
-
-body.light .homeBtn {
-    background: rgba(11, 18, 32, .03);
 }
 
 .homeBtn:hover {
     transform: translateY(-2px);
     border-color: rgba(110, 168, 254, .45);
     background: rgba(110, 168, 254, .12);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-lg)
 }
 
 .homeBtn .t {
     font-weight: 900;
     letter-spacing: .2px;
     font-size: 18px;
-    margin: 0;
+    margin: 0
 }
 
 .homeBtn .d {
     margin: 6px 0 0;
     color: var(--muted);
     font-size: 13px;
-    line-height: 1.35;
+    line-height: 1.35
 }
 
 .homeBtn .go {
     font-weight: 900;
     border: 1px solid var(--line);
-    background: rgba(255, 255, 255, .06);
+    background: var(--chip-bg);
     padding: 10px 12px;
     border-radius: 12px;
-    white-space: nowrap;
+    white-space: nowrap
+}
+
+.homeBtnLeft {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0
+}
+
+.homeIcon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--chip-bg);
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    box-shadow: var(--shadow-sm)
+}
+
+.homeIcon svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+    fill: currentColor;
+    opacity: .95
+}
+
+.pomoConfig {
+    max-width: 720px;
+    margin: 0 auto 14px;
+    text-align: left
+}
+
+#pagepomodoro .row.three {
+    grid-template-columns: 160px 1fr 1fr;
+    align-items: end;
+    gap: 12px
+}
+
+@media (max-width:720px) {
+    #pagepomodoro .row.three {
+        grid-template-columns: 1fr
+    }
+}
+
+#pagepomodoro .row.two {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap
+}
+
+#pagepomodoro .actions {
+    justify-content: center
+}
+
+.toggleRow .pomoChk {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none
+}
+
+.toggleRow .chkBox {
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+    background: rgba(0, 0, 0, .18);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+    display: inline-grid;
+    place-items: center;
+}
+
+body.light .toggleRow .chkBox {
+    background: rgba(11, 18, 32, .04)
+}
+
+.toggleRow .chkText {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 650
+}
+
+.toggleRow .pomoChk:checked+.chkBox {
+    background: color-mix(in srgb, var(--accent) 28%, rgba(255, 255, 255, .06));
+    border-color: color-mix(in srgb, var(--accent) 70%, var(--line));
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .22);
+}
+
+.toggleRow .pomoChk:checked+.chkBox::after {
+    content: "";
+    width: 9px;
+    height: 5px;
+    border-left: 2px solid var(--text);
+    border-bottom: 2px solid var(--text);
+    transform: rotate(-45deg);
+    margin-top: -1px;
+}
+
+.toggleRow:hover .chkBox {
+    transform: translateY(-1px);
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--line))
 }
 
 .footer {
     margin-top: 14px;
     padding: 0 24px 12px;
     color: var(--muted);
-    font-size: 12px;
+    font-size: 12px
 }
 
 .footerInner {
     max-width: 1100px;
-    margin: 0 auto;
+    margin: 0 auto
 }
 
 .footerCard {
@@ -514,13 +655,9 @@ body.light .homeBtn {
     padding: 6px 10px;
     border: 1px solid var(--line);
     border-radius: 14px;
-    background: rgba(0, 0, 0, .12);
+    background: var(--surface-3);
     box-shadow: var(--shadow-sm);
     flex-wrap: wrap;
-}
-
-body.light .footerCard {
-    background: rgba(11, 18, 32, .03);
 }
 
 .iconLink {
@@ -531,40 +668,38 @@ body.light .footerCard {
     height: 32px;
     border-radius: 10px;
     border: 1px solid var(--line);
-    background: rgba(255, 255, 255, .06);
+    background: var(--chip-bg);
     color: var(--text);
     text-decoration: none;
-    transition: transform .15s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;
 }
 
 .iconLink:hover {
     transform: translateY(-1px);
     border-color: rgba(110, 168, 254, .45);
     background: rgba(110, 168, 254, .14);
-    box-shadow: var(--shadow-hover);
+    box-shadow: var(--shadow-hover)
 }
 
 .iconLink svg {
     width: 18px;
     height: 18px;
     display: block;
-    fill: currentColor;
+    fill: currentColor
 }
 
-/* Adkar extras */
 .dhikrItem {
     cursor: pointer;
-    margin-bottom: 12px;
+    margin-bottom: 12px
 }
 
 .dhikrItem.done {
     opacity: .35;
-    pointer-events: none;
+    pointer-events: none
 }
 
 .dhikrText {
     font-size: 20px;
     font-weight: 800;
-    margin: 0 0 10px 0;
-    text-align: right;
+    margin: 0 0 10px;
+    text-align: right
 }
