@@ -820,6 +820,272 @@ const QUIZ_QUESTIONS = [
         answer: 0,
         exp: "A commit records a snapshot of tracked changes."
     },
+    {
+        cat: "Fun",
+        q: "What's the best club in Biskra?",
+        options: ["Debug Club", "InterLink Club", "Metaverse Club"],
+        answer: 1,
+        exp: "InterLink is the best club here."
+    },
+    {
+        cat: "Fun",
+        q: "Who is the best programmer?",
+        options: ["Elon Musk", "Steve Jobs", "Abderrazak"],
+        answer: 2,
+        exp: "Because Abderrazak made this web application."
+    },
+    {
+        cat: "Basics",
+        q: "What does 'bug' mean in programming?",
+        options: ["A feature", "An error in the code", "A hardware upgrade"],
+        answer: 1,
+        exp: "A bug is an error or flaw that causes incorrect or unexpected behavior."
+    },
+    {
+        cat: "Basics",
+        q: "Which of these is NOT a programming language?",
+        options: ["Python", "HTML", "Cappuccino"],
+        answer: 2,
+        exp: "HTML is a markup language; Cappuccino is just a drink name here."
+    },
+    {
+        cat: "Programming",
+        q: "What does 'IDE' stand for?",
+        options: ["Integrated Development Environment", "Internal Data Engine", "Infinite Debugging Experience"],
+        answer: 0,
+        exp: "An IDE is a software suite that helps you write, run, and debug code."
+    },
+    {
+        cat: "Programming",
+        q: "In most languages, arrays are usually indexed starting from…",
+        options: ["0", "1", "−1"],
+        answer: 0,
+        exp: "Many languages like C, Java, and JavaScript use zero-based indexing."
+    },
+    {
+        cat: "Data Structures",
+        q: "Which data structure is best to implement a FIFO queue?",
+        options: ["Queue", "Stack", "Hash table"],
+        answer: 0,
+        exp: "A queue is explicitly designed for FIFO behavior."
+    },
+    {
+        cat: "Data Structures",
+        q: "Which structure is best suited for fast key–value lookups?",
+        options: ["Array", "Hash map", "Queue"],
+        answer: 1,
+        exp: "Hash maps (dictionaries) give average O(1) key–value access."
+    },
+    {
+        cat: "Algorithms",
+        q: "Which algorithm is typically used for finding the shortest path in a weighted graph?",
+        options: ["Bubble sort", "Dijkstra’s algorithm", "Merge sort"],
+        answer: 1,
+        exp: "Dijkstra’s algorithm finds shortest paths from a source in a weighted graph."
+    },
+    {
+        cat: "Algorithms",
+        q: "Which sorting algorithm is usually O(n log n) in the average case?",
+        options: ["Bubble sort", "Insertion sort", "Merge sort"],
+        answer: 2,
+        exp: "Merge sort guarantees O(n log n) time complexity."
+    },
+    {
+        cat: "Big-O",
+        q: "If an algorithm doubles its steps every time n increases by 1, its complexity is roughly…",
+        options: ["O(n)", "O(log n)", "O(2^n)"],
+        answer: 2,
+        exp: "Doubling with each increment is characteristic of exponential time."
+    },
+    {
+        cat: "Big-O",
+        q: "Which complexity is generally best (fastest) for large n?",
+        options: ["O(n^3)", "O(log n)", "O(n^2)"],
+        answer: 1,
+        exp: "Logarithmic time grows the slowest, so it’s best for large inputs."
+    },
+    {
+        cat: "Operating Systems",
+        q: "What is a 'thread' in an OS?",
+        options: ["A type of cable", "A unit of CPU execution inside a process", "A backup file"],
+        answer: 1,
+        exp: "A thread is the smallest unit of execution scheduled by the OS."
+    },
+    {
+        cat: "Operating Systems",
+        q: "What does 'deadlock' mean?",
+        options: ["CPU overheating", "Processes waiting on each other forever", "Hard disk full"],
+        answer: 1,
+        exp: "Deadlock happens when processes wait on resources in a cycle that never breaks."
+    },
+    {
+        cat: "Networking",
+        q: "Which protocol is commonly used to send emails?",
+        options: ["SMTP", "FTP", "SSH"],
+        answer: 0,
+        exp: "SMTP (Simple Mail Transfer Protocol) is used for sending emails."
+    },
+    {
+        cat: "Networking",
+        q: "Which device usually connects multiple networks together?",
+        options: ["Router", "Keyboard", "Monitor"],
+        answer: 0,
+        exp: "Routers forward packets between different networks."
+    },
+    {
+        cat: "Networking",
+        q: "What does IP in 'IP address' stand for?",
+        options: ["Internet Protocol", "Internal Program", "Input Processor"],
+        answer: 0,
+        exp: "IP stands for Internet Protocol, which handles addressing and routing."
+    },
+    {
+        cat: "Databases",
+        q: "What does SQL stand for?",
+        options: ["Structured Query Language", "Simple Question List", "Sequential Query Logic"],
+        answer: 0,
+        exp: "SQL is the standard language for working with relational databases."
+    },
+    {
+        cat: "Databases",
+        q: "Which SQL command is used to remove a table completely?",
+        options: ["DELETE TABLE", "DROP TABLE", "REMOVE TABLE"],
+        answer: 1,
+        exp: "DROP TABLE deletes the table structure and its data."
+    },
+    {
+        cat: "Databases",
+        q: "A primary key in a table must be…",
+        options: ["Unique and not NULL", "Always text", "Always a number"],
+        answer: 0,
+        exp: "Primary keys uniquely identify rows and cannot be NULL."
+    },
+    {
+        cat: "Security",
+        q: "What does 'HTTPS' add on top of HTTP?",
+        options: ["More ads", "Encryption and security", "Faster Wi‑Fi"],
+        answer: 1,
+        exp: "HTTPS uses TLS to encrypt traffic and improve security."
+    },
+    {
+        cat: "Security",
+        q: "What is phishing?",
+        options: ["Optimizing code", "Tricking users into giving up secrets", "Testing Wi‑Fi speed"],
+        answer: 1,
+        exp: "Phishing uses fake messages/sites to steal credentials or data."
+    },
+    {
+        cat: "Security",
+        q: "Two‑factor authentication (2FA) usually means…",
+        options: ["Two passwords only", "Password plus another proof (code, app, device)", "Using two browsers"],
+        answer: 1,
+        exp: "2FA combines something you know (password) with something you have or are."
+    },
+    {
+        cat: "Web",
+        q: "HTML is mainly used for…",
+        options: ["Structuring web content", "Styling pages", "Running database queries"],
+        answer: 0,
+        exp: "HTML defines the structure and semantics of web pages."
+    },
+    {
+        cat: "Web",
+        q: "JavaScript in the browser is mainly used for…",
+        options: ["Interactivity and logic", "Only styling", "Installing drivers"],
+        answer: 0,
+        exp: "JavaScript adds dynamic behavior and logic to web pages."
+    },
+    {
+        cat: "Web",
+        q: "Which HTTP method is commonly used to request data (without changing it)?",
+        options: ["GET", "DELETE", "FORMAT"],
+        answer: 0,
+        exp: "GET requests data from a resource without modifying it."
+    },
+    {
+        cat: "Git",
+        q: "Which command creates a copy of a remote repository on your machine?",
+        options: ["git clone", "git copy", "git download"],
+        answer: 0,
+        exp: "git clone copies an entire remote repo locally."
+    },
+    {
+        cat: "Git",
+        q: "Which command sends your local commits to a remote?",
+        options: ["git push", "git send", "git upload"],
+        answer: 0,
+        exp: "git push uploads your commits to a remote repository."
+    },
+    {
+        cat: "Git",
+        q: "What does 'git status' show?",
+        options: ["Battery level", "Current branch and changes", "Internet speed"],
+        answer: 1,
+        exp: "git status shows staged/unstaged changes and branch info."
+    },
+    {
+        cat: "Programming",
+        q: "What is a 'loop' used for?",
+        options: ["Repeating code multiple times", "Encrypting files", "Drawing UI only"],
+        answer: 0,
+        exp: "Loops let you repeat a block of code until a condition changes."
+    },
+    {
+        cat: "Programming",
+        q: "In many languages, '==' is used to…",
+        options: ["Assign a value", "Compare two values", "Delete a variable"],
+        answer: 1,
+        exp: "== (or ===) is typically a comparison operator, not assignment."
+    },
+    {
+        cat: "Programming",
+        q: "What is a variable?",
+        options: ["A fixed number", "A named storage for data", "Only a constant string"],
+        answer: 1,
+        exp: "Variables store data values that can change during program execution."
+    },
+    {
+        cat: "Fun CS",
+        q: "When your code works on the first try, you should…",
+        options: ["Assume it’s perfect forever", "Still test it and be suspicious", "Immediately refactor the universe"],
+        answer: 1,
+        exp: "Even if it runs, you still need to test and review the logic."
+    },
+    {
+        cat: "Fun CS",
+        q: "What is the unofficial first step of debugging?",
+        options: ["Blame the compiler", "Check if you saved the file and re‑run", "Uninstall the OS"],
+        answer: 1,
+        exp: "Forgetting to save or re‑run is a classic source of “bugs”."
+    },
+    {
+        cat: "Fun",
+        q: "What’s the most powerful key for a CS student?",
+        options: ["Caps Lock", "Ctrl+S", "Num Lock"],
+        answer: 1,
+        exp: "Saving your work frequently is the real superpower."
+    },
+    {
+        cat: "Fun",
+        q: "A programmer’s best friend during deadlines is…",
+        options: ["Sleep", "Coffee or tea", "Turning off the PC"],
+        answer: 1,
+        exp: "Caffeine and focus are a classic combo during crunch time."
+    },
+    {
+        cat: "Basics",
+        q: "RAM is mainly used for…",
+        options: ["Permanent storage", "Temporary working memory", "Improving screen colors"],
+        answer: 1,
+        exp: "RAM holds data and code that the CPU is actively using."
+    },
+    {
+        cat: "Basics",
+        q: "The CPU is often called the…",
+        options: ["Heart of the computer", "Brain of the computer", "Legs of the computer"],
+        answer: 1,
+        exp: "The CPU performs most calculations, so it’s nicknamed the brain."
+    },
 ];
 
 function shuffleInPlace(arr) {
@@ -835,7 +1101,7 @@ const quizState = {
     idx: 0,
     score: 0,
     locked: false,
-    total: 10,
+    total: 12,
 };
 
 function qEl(id) { return document.getElementById(id); }
@@ -942,7 +1208,7 @@ function quizRestart() {
     const pool = [...QUIZ_QUESTIONS];
     shuffleInPlace(pool);
 
-    quizState.total = Math.min(10, pool.length);
+    quizState.total = pool.length;
     quizState.order = pool.slice(0, quizState.total);
     quizState.idx = 0;
     quizState.score = 0;
