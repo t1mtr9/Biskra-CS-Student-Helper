@@ -1,4 +1,4 @@
-const CACHE = "biskra-cs-v14";
+const CACHE = "biskra-cs-v15";
 
 const ASSETS = ["./",
   "./index.html",

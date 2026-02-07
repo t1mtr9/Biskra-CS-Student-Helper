@@ -68,7 +68,6 @@
                 <a class="homeBtn" href="#calc">
                     <div class="homeBtnLeft">
                         <div class="homeIcon" aria-hidden="true">
-                            <!-- Calculator SVG -->
                             <svg viewBox="0 0 24 24">
                                 <path
                                     d="M7 2h10a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3zm0 2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H7z">
@@ -90,7 +89,6 @@
                 <a class="homeBtn" href="#pomodoro">
                     <div class="homeBtnLeft">
                         <div class="homeIcon" aria-hidden="true">
-                            <!-- Pomodoro Timer SVG -->
                             <svg viewBox="0 0 24 24">
                                 <path d="M9 2h6v2H9V2z"></path>
                                 <path
@@ -131,7 +129,6 @@
                 <a class="homeBtn" href="#quiz">
                     <div class="homeBtnLeft">
                         <div class="homeIcon" aria-hidden="true">
-                            <!-- Simple quiz icon -->
                             <svg viewBox="0 0 24 24">
                                 <path
                                     d="M7 2h10a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3zm0 2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H7z">
@@ -148,6 +145,30 @@
                         </div>
                     </div>
                     <div class="go">Play</div>
+                </a>
+
+                <!-- ✅ HABITS BUTTON -->
+                <a class="homeBtn" href="#habits">
+                    <div class="homeBtnLeft">
+                        <div class="homeIcon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M4 19V5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                </path>
+                                <path d="M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                </path>
+                                <path d="M8 17v-6M12 17v-9M16 17v-3" stroke="currentColor" stroke-width="1.8"
+                                    stroke-linecap="round"></path>
+                            </svg>
+
+
+
+                        </div>
+                        <div>
+                            <div class="t">Habit Tracker</div>
+                            <div class="d">Track daily habits + streaks.</div>
+                        </div>
+                    </div>
+                    <div class="go">Open</div>
                 </a>
             </div>
         </section>
@@ -210,6 +231,7 @@
 
         <!-- POMODORO -->
         <section class="page" id="pagepomodoro">
+            <!-- (unchanged) -->
             <div class="card">
                 <div class="hd">
                     <div class="h">Pomodoro</div>
@@ -269,6 +291,7 @@
 
         <!-- ADKAR -->
         <section class="page" id="pageadkar">
+            <!-- (unchanged) -->
             <div class="card">
                 <div class="hd">
                     <div class="h">Adkar</div>
@@ -304,7 +327,9 @@
             </div>
         </section>
 
+        <!-- QUIZ -->
         <section class="page" id="pagequiz">
+            <!-- (unchanged) -->
             <div class="card">
                 <div class="hd">
                     <div class="h">CS Quiz</div>
@@ -341,7 +366,90 @@
             </div>
         </section>
 
-        <!-- SEMESTER PAGES (keep IDs so JS fills them) -->
+        <!-- ✅ HABIT TRACKER PAGE (MOVED INSIDE .wrap) -->
+        <section id="pagehabits" class="page">
+            <div class="card">
+                <div class="hd">
+                    <div class="h">
+                        <span>📊 Habit Tracker</span>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button onclick="showAddHabitForm()" class="secondary">+ Add Habit</button>
+
+                        <!-- ✅ FIXED: navigate with hash router -->
+                        <a href="#home" class="homeBtn"
+                            style="display: inline-flex; padding: 8px 12px; font-size: 13px; text-decoration: none;">
+                            ← Home
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bd">
+                    <div id="addHabitForm" style="display: none; margin-bottom: 16px;">
+                        <div class="module">
+                            <div class="top">
+                                <div class="name">New Habit</div>
+                            </div>
+
+                            <div class="row two" style="margin-bottom: 12px;">
+                                <div>
+                                    <label>Habit Name</label>
+                                    <input type="text" id="habitName" placeholder="e.g., Morning Exercise"
+                                        style="width: 100%; padding: 10px; border-radius: 14px; border: 1px solid var(--line); background: var(--input-bg); color: var(--text); outline: none;">
+                                </div>
+                                <div>
+                                    <label>Daily Goal</label>
+                                    <input type="number" id="habitGoal" placeholder="1" min="1" value="1">
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: 12px;">
+                                <label>Category (Optional)</label>
+                                <input type="text" id="habitCategory" placeholder="e.g., Health, Study, Spiritual"
+                                    style="width: 100%; padding: 10px; border-radius: 14px; border: 1px solid var(--line); background: var(--input-bg); color: var(--text); outline: none;">
+                            </div>
+
+                            <div class="actions">
+                                <button onclick="addNewHabit()">Save Habit</button>
+                                <button onclick="cancelAddHabit()" class="secondary">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="habitsContainer"></div>
+
+                    <div id="emptyState" style="text-align: center; padding: 40px 20px; color: var(--muted);">
+                        <div style="font-size: 48px; margin-bottom: 16px;">📝</div>
+                        <div style="font-size: 18px; font-weight: 700; margin-bottom: 8px;">No habits yet</div>
+                        <div style="font-size: 14px;">Click "Add Habit" to start tracking your daily habits</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 16px;">
+                <div class="hd">
+                    <div class="h">Statistics</div>
+                </div>
+                <div class="bd">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                        <div class="stat">
+                            <div class="big" id="totalHabits">0</div>
+                            <div class="sub">Total Habits</div>
+                        </div>
+                        <div class="stat">
+                            <div class="big" id="todayCompleted">0</div>
+                            <div class="sub">Completed Today</div>
+                        </div>
+                        <div class="stat">
+                            <div class="big" id="currentStreak">0</div>
+                            <div class="sub">Current Streak</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEMESTER PAGES -->
         <section class="page" id="pages1"></section>
         <section class="page" id="pages2"></section>
         <section class="page" id="pages3"></section>
