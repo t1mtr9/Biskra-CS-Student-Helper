@@ -247,6 +247,8 @@ function renderHabits() {
             </div>
           </div>
 
+          ${generateContributionGraph(habit, data.completions)}
+
           <div class="actions" style="margin-top: 12px;">
             <button onclick="toggleHabitCompletion('${habit.id}')" style="flex: 1; ${isComplete ? "background: rgba(49, 208, 170, 0.20); border-color: var(--good);" : ""
                 }">
@@ -262,6 +264,33 @@ function renderHabits() {
 
     container.innerHTML = html;
     updateHabitStats();
+}
+
+/**
+ * Generates a GitHub-style contribution graph for a habit.
+ * @param {object} habit - The habit object.
+ * @param {object} completions - The completions data.
+ * @returns {string} The HTML for the contribution graph.
+ */
+function generateContributionGraph(habit, completions) {
+    const today = new Date();
+    const days = [];
+    for (let i = 0; i < 91; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() - i);
+        days.push(date);
+    }
+    days.reverse();
+
+    let graphHtml = '<div class="contributionGraph">';
+    days.forEach(date => {
+        const dateStr = date.toISOString().split('T')[0];
+        const completionCount = completions[dateStr]?.[habit.id] || 0;
+        const level = Math.min(Math.floor((completionCount / habit.goal) * 4), 4);
+        graphHtml += `<div class="daySquare" style="background-color: var(--contribution-level-${level})" title="${dateStr}: ${completionCount}/${habit.goal}"></div>`;
+    });
+    graphHtml += '</div>';
+    return graphHtml;
 }
 
 /**
