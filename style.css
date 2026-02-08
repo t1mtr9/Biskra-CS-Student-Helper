@@ -849,3 +849,21 @@ body.light .toggleRow .chkBox {
     margin-top: 12px;
     line-height: 1.45;
 }
+
+.habit-category-title {
+    grid-column: 1 / -1;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+@media (min-width: 768px) {
+  #habitsContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+}

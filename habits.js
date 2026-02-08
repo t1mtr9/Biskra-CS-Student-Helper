@@ -211,8 +211,7 @@ function renderHabits() {
 
     let html = "";
     Object.keys(grouped).forEach((category) => {
-        html += `<div style="margin-bottom: 16px;">`;
-        html += `<div style="font-size: 12px; color: var(--muted); margin-bottom: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">${category}</div>`;
+        html += `<div class="habit-category-title">${category}</div>`;
 
         grouped[category].forEach((habit) => {
             const completed = data.completions[today]?.[habit.id] || 0;
@@ -258,8 +257,6 @@ function renderHabits() {
         </div>
       `;
         });
-
-        html += `</div>`;
     });
 
     container.innerHTML = html;
