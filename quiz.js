@@ -22,6 +22,13 @@ const QUIZ_QUESTIONS = [
         exp: "OOP is a real paradigm; the others are jokes.",
     },
     {
+        cat: "Funny!",
+        q: "Who is the best female programmer?",
+        options: ["Ada Lovelace", "Ibtihal", "Grace Hopper"],
+        answer: 2,
+        exp: "Bcz she just a Girl <3.",
+    },
+    {
         cat: "Data Structures",
         q: "Which structure uses LIFO (Last In, First Out)?",
         options: ["Queue", "Stack", "Binary search tree"],
